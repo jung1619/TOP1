@@ -46,7 +46,7 @@
 				stompClient.connect({},function(frame){
 					
 					stompClient.subscribe('/subscribe/chat/${p_num}',function(message){
-						var data = JSON.parse(message.body);
+						var data = JSON.parse(message.body);                                                                                                 
 						if( data.id == myId ){
 							$('#chatLogView').append('<div class="mine">'+data.message+"</div><br>");
 						}else
@@ -54,12 +54,25 @@
 					});
 					
 					stompClient.subscribe('/subscribe/chat/${p_num}/context',function(context){
+						//var editor = CKEDITOR.document.getById('editor1');
+						var editor = CKEDITOR.instances.editor1;
 						
 						var data = JSON.parse(context.body);
-						console.log("받아보자:"+data.context); 
+						console.log('id체크' + data.writer +' // '+ myId);
+						console.log("받아보자:"+data.context);
 						
-						$("#editor1").html(data.context);
-					
+						if( data.writer == myId ){
+							console.log(myId+'가 입력중');
+						}else{
+							console.log('나는 보는중');		
+						}
+						
+						setTimeout(function() {
+							if( data.writer != myId ){
+								console.log('^^');
+								editor.setData( data.context );								
+							}
+						}, 2000);
 						
 					});
 				});
@@ -68,12 +81,12 @@
 			
 			function sendMessage(){
 				var str = $('#message').val();
-					stt = str.replace(/ /gi, '&nbsp;')
+					str = str.replace(/ /gi, '&nbsp;')
 					str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
 					
 					if(str.length>0){
 						stompClient.send("/chat/${p_num}",{}, JSON.stringify({
-									message :str	
+							message : str	
 						}));
 					};
 					$("#message").val("");

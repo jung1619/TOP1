@@ -32,12 +32,12 @@
   	WHERE p_num = #{p_num}
   </update>
   
-  <!-- 정광철 context적용   update-->
+ 
   <update id="upDateContext" parameterType="Context">
   	UPDATE 
   		context
   	SET
-  		context = #{context}
+  		context = #{context}, writer = #{writer}
   	WHERE 
   		p_num = #{p_num}
   </update>
@@ -128,6 +128,17 @@
   		p_num = #{p_num}	
   </select>
   
+  <select id="searchProject" parameterType="int" resultType="Project">
+  	SELECT p_num, p_m_id, p_name, p_memberlist, p_startdate, p_enddate
+  	FROM top_project
+  	WHERE p_num = #{p_num}
+  </select>
+  
+  <select id="searchContext" parameterType="int" resultType="Context">
+  	SELECT p_num, title, context, writer
+  	FROM context
+  	WHERE p_num = #{p_num}
+  </select>
   
   	
   <!-- I N S E R T -->
@@ -164,6 +175,7 @@
   	)
   </insert>
   
+  <!-- 
   <insert id="insertContext" parameterType="Context">
   	INSERT INTO context(
   		p_num
@@ -175,7 +187,16 @@
   		,#{title}
   	)
   
+  </insert> -->
+  
+  <insert id="insertContext" parameterType="Context">
+  INSERT INTO context(
+  	p_num, title, context
+  )VALUES(
+  	#{p_num}, #{title}, #{context}
+  )
   </insert>
+  
   <insert id="insertNotice" parameterType="Notice">
   INSERT INTO
   	notice(
@@ -187,13 +208,6 @@
   		,#{n_content}
   		,sysdate
   	)
-  	
-  	
-  
-  	
-  
-  
-  
   
   </insert>
   

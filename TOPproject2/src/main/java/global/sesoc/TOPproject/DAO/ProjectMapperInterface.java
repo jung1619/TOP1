@@ -14,6 +14,9 @@ public interface ProjectMapperInterface {
 	public int insertProjectSchedule(Schedule schedule);
 	public int insertProjectNotice(Memo memo);
 	
+	public Project searchProject(int p_num);
+	public Context searchContext(int p_num);
+	
 	public int updateProject(Project project);
 	public int updateProjectSchedule(Schedule schedule);
 	public int updateProjectNotice(Memo memo);

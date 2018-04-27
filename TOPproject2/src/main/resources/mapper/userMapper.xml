@@ -68,7 +68,7 @@
   </select>
   
   
-  <select parameterType="String" id="searchUserFL" resultType="String"> 
+  <select id="searchUserFL" parameterType="String" resultType="String"> 
   	SELECT fl 
   	FROM friend_list 
   	WHERE id = #{id} 

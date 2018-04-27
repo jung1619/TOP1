@@ -65,3 +65,20 @@ body{
 .chatEditor_textView{
 	background :#00BFFF;
 }
+
+.mine{
+	float: right;
+	background-color: yellow;
+}
+
+.other{
+	float: left;
+	background-color: blue;
+}
+
+.mine, .other{
+	clear: both;
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+}

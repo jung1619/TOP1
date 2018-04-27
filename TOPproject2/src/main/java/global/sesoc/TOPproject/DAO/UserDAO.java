@@ -82,10 +82,10 @@ public class UserDAO {
 	
 	
 	public User searchUser(String id){
-		User user = null;
 		logger.info("회원 검색 : " + id);
 		
 		UserMapperInterface mapper = sqls.getMapper(UserMapperInterface.class);
+		User user = null;
 		
 		try{
 			user = mapper.searchUser(id);

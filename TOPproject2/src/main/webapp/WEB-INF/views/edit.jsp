@@ -2,40 +2,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
-
-
-
-	<script src="https://cdn.ckeditor.com/4.9.1/full-all/ckeditor.js"></script>
+	
+	<script src="//cdn.ckeditor.com/4.9.1/full/ckeditor.js"></script>
+	<!-- <script src="https://cdn.ckeditor.com/4.9.1/full-all/ckeditor.js"></script> -->
+	
+	<script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/ckeditor/samples/js/sample.js'/>"></script>
+	<link rel="stylesheet" href='./resources/css/mystyles.css'/>
+	<link rel="stylesheet" href='./resources/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css'/>
+	<link rel="stylesheet" href='./resources/ckeditor/samples/css/samples.css'/>	
+	
 	
 	
 	<script type="text/javascript">
-		function test1(){
-			var testT = $("#editor1").val();
-			alert(testT);
-			return true;
-		}
 		
 		/* 드디어 성공이다!!!!! */
 		$(document).ready(function(){
-		var editor = CKEDITOR.instances.editor1;
-		
-		editor.on('change',function(evt){
-			sendContext();			
-		})
-		
+			
+			editor.on("instanceReady", function(){
+				this.document.on("keyup", function(){
+					sendContext();
+				});
+			});
+			
+		});
 		
 		/* 추가 */
 		function sendContext(){
 			var context = CKEDITOR.instances.editor1.getData();
-			console.log("끌어올림:"+context);
-			
+			console.log('지금 여기~~~~'+myId);
 			stompClient.send("/chat/${p_num}/context",{}, JSON.stringify({
-						context :context		
-			}))	;
+				context :context,
+				writer: myId
+				})
+			);
+			console.log('컨컨컨컨컨텍텍텍텍-----------'+myId);
 		}
-		
-			
-		});
 	</script>
 	
 	<style type="text/css">
@@ -55,14 +57,11 @@
 	</style>
 
 	<div class="container">
-		<form action="testUP" method="post" onsubmit="return test1()">
-			<textarea name="text" id="editor1">
-				
-				test
-				
-			</textarea>
-			<input type="submit" value="저장">
-		</form>
+		<textarea name="text" id="editor1">
+			
+			${test}
+			
+		</textarea>
 	</div>
 	
 	<%@include file="editorSetting.jsp" %>

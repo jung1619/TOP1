@@ -61,17 +61,14 @@ public class ProjectDAO {
 	
 	
 	public int insertProject(Project project){
-		logger.info("프로젝트 생성 : " + project);
-		Project selectProject   = null;
-		
+		logger.info("프로젝트 생성");
 		
 		ProjectMapperInterface mapper = sqls.getMapper(ProjectMapperInterface.class);
 		int result = 0;
 		
 		try{
 			result = mapper.insertProject(project);
-			
-			logger.info("프로젝트 생성 성공");
+			logger.info("프로젝트 생성 성공 " + result + " : " + project);
 		}catch(Exception e){ logger.info("프로젝트 생성 실패"); e.printStackTrace(); }
 		return result;
 	}
@@ -156,7 +153,9 @@ public class ProjectDAO {
 		
 		try{
 			mapper.upDateContext(context);
-			logger.info("context Insert complete");
+			logger.info("작업내용 저장 성공(임시) : " + context + "/n" 
+					+ "-----------------------------------------------------------------------------------------------");
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -199,10 +198,10 @@ public class ProjectDAO {
 		Context result_context=null;
 		
 		ProjectMapperInterface mapper = sqls.getMapper(ProjectMapperInterface.class);
-		logger.info("p_num in ProjectDAO : "+p_num);
+		
 		try{
 			result_context = mapper.selectContext(p_num);
-			logger.info("selectContext in DOA : " +result_context);
+			logger.info("selectContext in DAO : " +result_context);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -318,6 +317,35 @@ public class ProjectDAO {
 		
 		return notice;
 	}
+	
+	
+
+	public Project searchProject(int p_num){
+		logger.info("프로젝트 검색 : " + p_num);
+		
+		ProjectMapperInterface mapper = sqls.getMapper(ProjectMapperInterface.class);
+		Project project = null;
+		
+		try{
+			project = mapper.searchProject(p_num);
+			logger.info("프로젝트 스케쥴 검색 성공 : " + project);
+		}catch(Exception e){ logger.info("프로젝트 스케쥴 검색 실패"); e.printStackTrace(); }
+		return project;
+	}
+	
+	public Context searchContext(int p_num){
+		logger.info("작업내용 검색(임시) : " + p_num);
+		
+		ProjectMapperInterface mapper = sqls.getMapper(ProjectMapperInterface.class);
+		Context context = null;
+		
+		try{
+			context = mapper.searchContext(p_num);
+			logger.info("작업내용 검색(임시) 성공 : " + context);
+		}catch(Exception e){ logger.info("작업내용 검색(임시) 실패"); e.printStackTrace(); }
+		return context;
+	}
+	
 	
 
 }
