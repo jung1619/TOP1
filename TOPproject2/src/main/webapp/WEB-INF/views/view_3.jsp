@@ -5,10 +5,10 @@
 	<head>
 		<title>conference</title>
 		
+		<script type="text/javascript" src="<c:url value='resources/js/jquery-3.2.1.js'/>"></script>
 		<link rel="stylesheet" type="text/css" href="resources/css/view_3.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/conference.css">
 			
-		<script type="text/javascript" src="<c:url value='resources/js/jquery-3.2.1.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='resources/js/sockjs.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='resources/js/stomp.js'/>"></script>
 	
